@@ -1,5 +1,5 @@
 window.WC_DATA = {
-  "updatedAt": "2026-06-26T14:19:05+09:00",
+  "updatedAt": "2026-06-26T17:46:05+09:00",
   "bestThirdSlots": 8,
   "summary": {
     "requiredMatchHits": 3,
