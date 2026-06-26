@@ -1,5 +1,5 @@
 window.WC_DATA = {
-  "updatedAt": "2026-06-27T05:11:06+09:00",
+  "updatedAt": "2026-06-27T06:41:23+09:00",
   "bestThirdSlots": 8,
   "summary": {
     "requiredMatchHits": 3,
@@ -99,10 +99,10 @@ window.WC_DATA = {
         "name": "이라크",
         "flag": "🇮🇶"
       },
-      "status": "live",
-      "impact": "good",
+      "status": "ended",
+      "impact": "bad",
       "score": {
-        "home": 1,
+        "home": 5,
         "away": 0
       }
     },
@@ -297,8 +297,8 @@ window.WC_DATA = {
       "id": "SEN",
       "team": "세네갈",
       "pts": 3,
-      "gd": -2,
-      "gf": 4,
+      "gd": 2,
+      "gf": 8,
       "played": 3
     },
     {
