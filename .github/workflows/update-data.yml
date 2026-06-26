@@ -19,17 +19,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check if updates are still needed
+        id: need_update
+        run: |
+          if grep -Eq '"status": "(upcoming|live)"' data/matches.js; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            echo "Pending or live matches found. Continue update."
+          else
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            echo "All tracked matches are ended. Skip update."
+          fi
+
       - name: Set up Python
+        if: steps.need_update.outputs.should_run == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Update data file
+        if: steps.need_update.outputs.should_run == 'true'
         env:
           FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
         run: python scripts/update_wc_data.py --file data/matches.js --competition WC --season 2026
 
       - name: Commit and push if changed
+        if: steps.need_update.outputs.should_run == 'true'
         run: |
           if git diff --quiet -- data/matches.js; then
             echo "No data changes."
