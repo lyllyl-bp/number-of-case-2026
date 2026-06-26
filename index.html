@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>대한민국 32강 경우의 수</title>
+  <style>
+    :root {
+      --bg: #f6f8ff;
+      --panel: #fff;
+      --line: #d9e2f2;
+      --text: #111827;
+      --muted: #4b5563;
+      --good: #15803d;
+      --good-bg: #ecfdf3;
+      --bad: #b91c1c;
+      --bad-bg: #fef2f2;
+      --pending: #92400e;
+      --pending-bg: #fffbeb;
+      --blue: #1d4ed8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 0% 0%, #dbeafe 0, transparent 30%),
+        radial-gradient(circle at 100% 0%, #fef3c7 0, transparent 28%),
+        var(--bg);
+    }
+    .wrap { max-width: 1220px; margin: 0 auto; padding: 24px 16px 48px; }
+    .hero {
+      background: linear-gradient(115deg, #2563eb, #7c3aed 65%, #f59e0b);
+      color: #fff;
+      border-radius: 20px;
+      padding: 22px 20px;
+      box-shadow: 0 18px 34px rgba(37, 99, 235, 0.28);
+    }
+    .hero h1 { margin: 0 0 4px; font-size: 35px; word-break: keep-all; }
+    .hero p { margin: 0; opacity: 0.95; }
+    .meta { margin-top: 8px; font-size: 14px; opacity: 0.9; }
+    .card {
+      margin-top: 14px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    }
+    h2 { margin: 0 0 12px; font-size: 27px; }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+    }
+    .kpi {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      background: #f8fbff;
+    }
+    .kpi .label { font-size: 14px; color: var(--muted); }
+    .kpi strong { display: block; font-size: 24px; margin-top: 4px; }
+    .kpi-sub { margin-top: 4px; font-size: 13px; color: var(--muted); }
+    .record-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .record-stat {
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      background: #eff6ff;
+      padding: 8px 6px;
+      text-align: center;
+    }
+    .record-stat .name {
+      font-size: 12px;
+      color: #1e3a8a;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .record-stat .value {
+      margin-top: 2px;
+      font-size: 22px;
+      font-weight: 900;
+      color: #1e40af;
+      line-height: 1.1;
+    }
+    .status-led-board {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #f8fbff;
+      padding: 12px;
+    }
+    .status-led-head {
+      margin-bottom: 8px;
+    }
+    .status-led-head .label {
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .status-led-strip {
+      display: grid;
+      grid-template-columns: repeat(var(--segment-count, 9), minmax(0, 1fr));
+      gap: 6px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .status-led-item {
+      display: grid;
+      gap: 4px;
+      justify-items: center;
+    }
+    .status-led {
+      height: 14px;
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid #94a3b8;
+      background: #cbd5e1;
+      opacity: 1;
+    }
+    .status-led.good {
+      background: #22c55e;
+      border-color: #16a34a;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.55);
+      opacity: 1;
+    }
+    .status-led.bad {
+      background: #ef4444;
+      border-color: #dc2626;
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.55);
+      opacity: 1;
+    }
+    .status-led.live {
+      background: #f59e0b;
+      border-color: #d97706;
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.55);
+      opacity: 1;
+    }
+    .status-led.pending {
+      background:
+        repeating-linear-gradient(
+          -45deg,
+          #dbe4ef 0 6px,
+          #edf2f8 6px 12px
+        );
+      border-color: #7b8ba1;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+    }
+    .status-led-label {
+      font-size: 12px;
+      line-height: 1;
+      color: #64748b;
+      font-weight: 700;
+    }
+    .progress-wrap {
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #eef2ff;
+      height: 14px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, #22c55e, #10b981);
+      transition: width 0.35s ease;
+    }
+    .progress-text {
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 12px;
+    }
+    .controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .filter-btn {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .filter-btn.active {
+      border-color: #93c5fd;
+      color: #1e3a8a;
+      background: #eff6ff;
+    }
+    .timeline {
+      display: grid;
+      gap: 10px;
+    }
+    .timeline-item {
+      position: relative;
+      border-left: 4px solid #c7d2fe;
+      padding-left: 12px;
+    }
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -8px;
+      top: 20px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #4f46e5;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 1px #c7d2fe;
+    }
+    .match {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      background: #fff;
+    }
+    .match.ended-dim { opacity: 0.58; }
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .group { color: var(--blue); font-size: 15px; font-weight: 800; }
+    .badge {
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 10px;
+      white-space: nowrap;
+    }
+    .match-outcome-badge {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      margin-left: 6px;
+    }
+    .match-outcome-badge.good {
+      color: var(--good);
+      background: var(--good-bg);
+      border-color: #86efac;
+    }
+    .match-outcome-badge.bad {
+      color: var(--bad);
+      background: var(--bad-bg);
+      border-color: #fca5a5;
+    }
+    .match-outcome-badge.pending {
+      color: var(--pending);
+      background: var(--pending-bg);
+      border-color: #fcd34d;
+    }
+    .good { color: var(--good); background: var(--good-bg); border-color: #86efac; }
+    .bad { color: var(--bad); background: var(--bad-bg); border-color: #fca5a5; }
+    .pending { color: var(--pending); background: var(--pending-bg); border-color: #fcd34d; }
+    .live { color: #1d4ed8; background: #eff6ff; border-color: #93c5fd; }
+    .fixture { font-size: 23px; font-weight: 900; margin-bottom: 6px; }
+    .kickoff { font-size: 14px; color: var(--muted); margin-bottom: 8px; }
+    .line { font-size: 16px; margin-top: 6px; }
+    .line strong { color: #0f172a; }
+    .wanted {
+      margin-top: 10px;
+      border: 1px dashed #93c5fd;
+      border-radius: 10px;
+      padding: 10px;
+      background: #eff6ff;
+      font-size: 17px;
+      font-weight: 800;
+      color: #1e3a8a;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 15px; }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 10px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { color: var(--muted); font-weight: 700; }
+    .kor-row td { background: #eff6ff; }
+    .in-cut td {
+      background: #ecfdf3;
+    }
+    .in-cut td:first-child {
+      border-left: 4px solid #22c55e;
+    }
+    .kor-row.in-cut td {
+      background: #dbeafe;
+    }
+    .pass { color: var(--good); font-weight: 800; }
+    .fail { color: var(--bad); font-weight: 800; }
+    .note { color: var(--muted); font-size: 14px; }
+    .error {
+      border: 1px solid #fecaca;
+      background: #fef2f2;
+      color: #991b1b;
+      border-radius: 12px;
+      padding: 10px;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1>🏆 대한민국 32강 경우의 수</h1>
+      <div id="updatedAt" class="meta"></div>
+    </div>
+
+    <div class="card">
+      <h2>핵심 요약</h2>
+      <div id="summaryKpis" class="kpis"></div>
+      <div class="progress-wrap"><div id="conditionProgress" class="progress-fill"></div></div>
+      <div id="progressText" class="progress-text"></div>
+      <p id="summaryNote" class="note" style="margin-top:10px"></p>
+    </div>
+
+    <div class="card">
+      <h2>남은 경기</h2>
+      <div class="controls">
+        <button class="filter-btn active" data-filter="all">전체</button>
+        <button class="filter-btn" data-filter="upcoming">남은 경기만</button>
+        <button class="filter-btn" data-filter="live">진행중만</button>
+        <button class="filter-btn" data-filter="ended">종료 경기만</button>
+      </div>
+      <div id="matchTimeline" class="timeline"></div>
+    </div>
+
+    <div class="card">
+      <h2>현재 조 3위 순위표</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>순위</th>
+            <th>조</th>
+            <th>팀</th>
+            <th>승점</th>
+            <th>득실</th>
+            <th>득점</th>
+            <th>경기</th>
+          </tr>
+        </thead>
+        <tbody id="thirdBody"></tbody>
+      </table>
+    </div>
+
+    <div id="errorBox"></div>
+  </div>
+
+  <script src="./data/matches.js"></script>
+  <script>
+    function formatKickoff(iso) {
+      const d = new Date(iso);
+      if (!Number.isFinite(d.getTime())) return iso;
+      const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
+      const ww = weekdays[d.getDay()];
+      const hh = String(d.getHours()).padStart(2, "0");
+      const mi = String(d.getMinutes()).padStart(2, "0");
+      return `${mm}/${dd}(${ww}) ${hh}:${mi} (KST)`;
+    }
+
+    function statusBadge(status) {
+      if (status === "achieved") return { label: "달성", cls: "good" };
+      if (status === "failed") return { label: "실패", cls: "bad" };
+      if (status === "live") return { label: "진행중", cls: "live" };
+      return { label: "대기", cls: "pending" };
+    }
+
+    function matchOutcomeBadge(match) {
+      if (match.status !== "ended") return { label: "대기", cls: "pending" };
+      if (match.impact === "good") return { label: "성공", cls: "good" };
+      if (match.impact === "bad") return { label: "실패", cls: "bad" };
+      return { label: "대기", cls: "pending" };
+    }
+
+    function statusLedClass(status) {
+      if (status === "achieved") return "good";
+      if (status === "failed") return "bad";
+      if (status === "live") return "live";
+      return "pending";
+    }
+
+    const KO_TEAM_NAMES = {
+      KOR: "대한민국", BIH: "보스니아헤르체고비나", SCO: "스코틀랜드", PAR: "파라과이",
+      ECU: "에콰도르", SWE: "스웨덴", BEL: "벨기에", CPV: "카보베르데",
+      SEN: "세네갈", ALG: "알제리", COD: "콩고민주공화국", CRO: "크로아티아",
+      GER: "독일", CIV: "코트디부아르", CUW: "퀴라소", JPN: "일본", AUS: "호주",
+      IRQ: "이라크", ESP: "스페인", URU: "우루과이", EGY: "이집트", IRN: "이란",
+      AUT: "오스트리아", UZB: "우즈베키스탄", GHA: "가나",
+      NZL: "뉴질랜드", KSA: "사우디아라비아"
+    };
+
+    function toKoTeamName(code, fallback) {
+      const c = String(code || "").toUpperCase();
+      return KO_TEAM_NAMES[c] || fallback || code || "-";
+    }
+
+    const CONDITION_GROUPS = [
+      {
+        group: "D",
+        wanted: "호주 승리 또는 파라과이 2골 차 이상 승리",
+        matches: [["AUS", "PAR"]],
+        evaluate: (ctx) => {
+          const m = ctx.mustGet("AUS", "PAR");
+          const aus = ctx.goalsFor(m, "AUS");
+          const par = ctx.goalsFor(m, "PAR");
+          const d = aus - par;
+          return d > 0 || d <= -2;
+        }
+      },
+      {
+        group: "E",
+        wanted: "독일 승리/무승부 + 코트디부아르 승리/무승부",
+        matches: [["GER", "ECU"], ["CIV", "CUW"]],
+        evaluate: (ctx) => {
+          const m1 = ctx.mustGet("GER", "ECU");
+          const m2 = ctx.mustGet("CIV", "CUW");
+          const germanyNotLose = ctx.goalsFor(m1, "GER") >= ctx.goalsFor(m1, "ECU");
+          const civNotLose = ctx.goalsFor(m2, "CIV") >= ctx.goalsFor(m2, "CUW");
+          return germanyNotLose && civNotLose;
+        }
+      },
+      {
+        group: "F",
+        wanted: "일본 2골 차 이상 승리",
+        matches: [["JPN", "SWE"]],
+        evaluate: (ctx) => {
+          const m = ctx.mustGet("JPN", "SWE");
+          return ctx.goalsFor(m, "JPN") - ctx.goalsFor(m, "SWE") >= 2;
+        }
+      },
+      {
+        group: "I",
+        wanted: "무승부 또는 세네갈 1골 차 승리 또는 이라크 1~4골 차 승리",
+        matches: [["SEN", "IRQ"]],
+        evaluate: (ctx) => {
+          const m = ctx.mustGet("SEN", "IRQ");
+          const sen = ctx.goalsFor(m, "SEN");
+          const irq = ctx.goalsFor(m, "IRQ");
+          const d = sen - irq;
+          return d === 0 || d === 1 || (d <= -1 && d >= -4);
+        }
+      },
+      {
+        group: "J",
+        wanted: "오스트리아 승리 또는 알제리 2골 차 이상 승리",
+        matches: [["ALG", "AUT"]],
+        evaluate: (ctx) => {
+          const m = ctx.mustGet("ALG", "AUT");
+          const alg = ctx.goalsFor(m, "ALG");
+          const aut = ctx.goalsFor(m, "AUT");
+          const d = alg - aut;
+          return d >= 2 || d < 0;
+        }
+      },
+      {
+        group: "K",
+        wanted: "우즈베키스탄 승리 또는 무승부",
+        matches: [["COD", "UZB"]],
+        evaluate: (ctx) => {
+          const m = ctx.mustGet("COD", "UZB");
+          const cod = ctx.goalsFor(m, "COD");
+          const uzb = ctx.goalsFor(m, "UZB");
+          const d = cod - uzb;
+          return d <= 0;
+        }
+      },
+      {
+        group: "L",
+        wanted: "가나 승리",
+        matches: [["CRO", "GHA"]],
+        evaluate: (ctx) => {
+          const m = ctx.mustGet("CRO", "GHA");
+          return ctx.goalsFor(m, "GHA") > ctx.goalsFor(m, "CRO");
+        }
+      },
+      {
+        group: "G",
+        wanted: "이집트 승리 + 벨기에 vs 뉴질랜드 승패 결정(무승부 제외)",
+        matches: [["EGY", "IRN"], ["BEL", "NZL"]],
+        evaluate: (ctx) => {
+          const m1 = ctx.mustGet("EGY", "IRN");
+          const m2 = ctx.mustGet("BEL", "NZL");
+          const egyptWin = ctx.goalsFor(m1, "EGY") > ctx.goalsFor(m1, "IRN");
+          const belNzlNotDraw = ctx.goalsFor(m2, "BEL") !== ctx.goalsFor(m2, "NZL");
+          return egyptWin && belNzlNotDraw;
+        }
+      },
+      {
+        group: "H",
+        wanted: "스페인 승리 + 카보베르데 vs 사우디 승패 결정(무승부 제외)",
+        matches: [["ESP", "URU"], ["CPV", "KSA"]],
+        evaluate: (ctx) => {
+          const m1 = ctx.mustGet("ESP", "URU");
+          const m2 = ctx.mustGet("CPV", "KSA");
+          const spainWin = ctx.goalsFor(m1, "ESP") > ctx.goalsFor(m1, "URU");
+          const cpvKsaNotDraw = ctx.goalsFor(m2, "CPV") !== ctx.goalsFor(m2, "KSA");
+          return spainWin && cpvKsaNotDraw;
+        }
+      }
+    ];
+
+    function findMatchByTeams(matches, group, codeA, codeB) {
+      return (matches || []).find((m) => {
+        if (m.group !== group) return false;
+        const h = m.home?.code;
+        const a = m.away?.code;
+        return (h === codeA && a === codeB) || (h === codeB && a === codeA);
+      }) || null;
+    }
+
+    function goalsFor(match, code) {
+      if (!match || !match.score) return null;
+      if (match.home?.code === code) return match.score.home;
+      if (match.away?.code === code) return match.score.away;
+      return null;
+    }
+
+    function evaluateConditionGroups(data) {
+      const matches = data.matches || [];
+      const ctx = {
+        mustGet: (a, b, group) => findMatchByTeams(matches, group, a, b),
+        goalsFor
+      };
+      return CONDITION_GROUPS.map((rule) => {
+        const groupedMatches = rule.matches
+          .map(([a, b]) => findMatchByTeams(matches, rule.group, a, b))
+          .filter(Boolean);
+        const hasLive = groupedMatches.some((m) => m.status === "live");
+        const allEnded = groupedMatches.length === rule.matches.length && groupedMatches.every((m) => m.status === "ended");
+        let status = hasLive ? "live" : "pending";
+        if (allEnded) {
+          const groupCtx = {
+            mustGet: (a, b) => findMatchByTeams(matches, rule.group, a, b),
+            goalsFor
+          };
+          status = rule.evaluate(groupCtx) ? "achieved" : "failed";
+        }
+        return { group: rule.group, wanted: rule.wanted, status, matches: groupedMatches };
+      });
+    }
+
+    function renderSummary(data) {
+      document.getElementById("updatedAt").textContent = `마지막 업데이트: ${formatKickoff(data.updatedAt)}`;
+      const groupProgressRows = evaluateConditionGroups(data);
+      const matchProgress = groupProgressRows.reduce((acc, g) => {
+        if (g.status === "live") acc.live += 1;
+        else if (g.status === "pending") acc.pending += 1;
+        else if (g.status === "achieved") acc.achieved += 1;
+        else if (g.status === "failed") acc.failed += 1;
+        else acc.pending += 1;
+        acc.total += 1;
+        return acc;
+      }, { achieved: 0, failed: 0, pending: 0, live: 0, total: 0 });
+      const achieved = matchProgress.achieved;
+      const failed = matchProgress.failed;
+      const pending = matchProgress.pending;
+      const live = matchProgress.live;
+      const target = Number(data.summary.requiredMatchHits ?? data.summary.requiredGroupsToHit) || 3;
+      const achievedForTarget = achieved;
+      const pct = Math.min(100, Math.round((achievedForTarget / target) * 100));
+      const ledNodes = groupProgressRows.length
+        ? groupProgressRows.map((g) => {
+          const label = statusBadge(g.status).label;
+          return `
+            <span class="status-led-item">
+              <span class="status-led ${statusLedClass(g.status)}" title="${g.group}조 · ${label}" aria-label="${g.group}조 ${label}"></span>
+              <span class="status-led-label">${g.group}조</span>
+            </span>
+          `;
+        }).join("")
+        : `
+          <span class="status-led-item">
+            <span class="status-led pending" title="데이터 대기중" aria-label="데이터 대기중"></span>
+            <span class="status-led-label">대기</span>
+          </span>
+        `;
+      document.getElementById("summaryKpis").innerHTML = `
+        <div class="kpi">
+          <span class="label">목표</span>
+          <strong>${CONDITION_GROUPS.length}개 조건 중 ${target}개 달성</strong>
+        </div>
+        <div class="kpi status-led-board" role="img" aria-label="조별 상태 표시: 달성 ${achieved}, 실패 ${failed}, 진행중 ${live}, 대기 ${pending}, 대상 조 수 ${matchProgress.total}">
+          <div class="status-led-head">
+            <span class="label">조건 진행 현황</span>
+          </div>
+          <div class="status-led-strip" style="--segment-count: ${Math.max(1, matchProgress.total)}">
+            ${ledNodes}
+          </div>
+        </div>
+      `;
+      document.getElementById("conditionProgress").style.width = `${pct}%`;
+      document.getElementById("progressText").textContent = `추가 조건 진행도(목표 ${target}개): ${achievedForTarget}/${target} (${pct}%)`;
+      document.getElementById("summaryNote").textContent = data.summary.note || "";
+    }
+
+    let currentFilter = "all";
+
+    function renderMatches(data) {
+      const timeline = document.getElementById("matchTimeline");
+      timeline.innerHTML = "";
+      const thirdByGroup = Object.fromEntries((data.thirdTable || []).map((r) => [r.group, r]));
+      const grouped = evaluateConditionGroups(data).sort((a, b) => {
+        const aKick = a.matches.length ? Math.min(...a.matches.map((m) => new Date(m.kickoff).getTime())) : Number.MAX_SAFE_INTEGER;
+        const bKick = b.matches.length ? Math.min(...b.matches.map((m) => new Date(m.kickoff).getTime())) : Number.MAX_SAFE_INTEGER;
+        return aKick - bKick;
+      });
+      let filtered = grouped;
+      if (currentFilter === "upcoming") filtered = grouped.filter((g) => g.status === "pending");
+      else if (currentFilter === "live") filtered = grouped.filter((g) => g.status === "live");
+      else if (currentFilter === "ended") filtered = grouped.filter((g) => g.status === "achieved" || g.status === "failed");
+
+      function renderGroupCard(groupRow, targetEl) {
+        const stat = statusBadge(groupRow.status);
+        const card = document.createElement("div");
+        card.className = `match timeline-item ${(groupRow.status === "achieved" || groupRow.status === "failed") ? "ended-dim" : ""}`;
+        const matchesHtml = groupRow.matches.map((m) => {
+          const score = (m.status === "ended" || m.status === "live") && m.score
+            ? `${m.score.home} : ${m.score.away}`
+            : "vs";
+          const outcome = matchOutcomeBadge(m);
+          return `
+            <div class="line">
+              <strong>${m.home.flag} ${m.home.name} ${score} ${m.away.name} ${m.away.flag}</strong>
+              <span class="match-outcome-badge ${outcome.cls}">${outcome.label}</span><br/>
+              킥오프: ${formatKickoff(m.kickoff)}
+            </div>
+          `;
+        }).join("");
+        card.innerHTML = `
+          <div class="topline">
+            <span class="group">${groupRow.group}조</span>
+            <span class="badge ${stat.cls}">${stat.label}</span>
+          </div>
+          ${matchesHtml || '<div class="line">경기 정보 대기중</div>'}
+          <div class="line"><strong>현재 3위:</strong> ${
+            thirdByGroup[groupRow.group]
+              ? `${toKoTeamName(thirdByGroup[groupRow.group].id, thirdByGroup[groupRow.group].team)} (승점 ${thirdByGroup[groupRow.group].pts}, 골득실 ${thirdByGroup[groupRow.group].gd})`
+              : "-"
+          }</div>
+          <div class="wanted">🎯 조건: ${groupRow.wanted}</div>
+        `;
+        targetEl.appendChild(card);
+      }
+
+      filtered.forEach((g) => renderGroupCard(g, timeline));
+    }
+
+    function renderThirdTable(data) {
+      const rows = [...(data.thirdTable || [])].sort((a, b) => b.pts - a.pts || b.gd - a.gd || b.gf - a.gf || a.id.localeCompare(b.id));
+      const body = document.getElementById("thirdBody");
+      body.innerHTML = "";
+      const cut = Number.isInteger(data.bestThirdSlots) ? data.bestThirdSlots : 8;
+      rows.forEach((r, i) => {
+        const tr = document.createElement("tr");
+        if (r.id === "KOR") tr.classList.add("kor-row");
+        const inCut = i < cut;
+        if (inCut) tr.classList.add("in-cut");
+        tr.innerHTML = `
+          <td>${i + 1}</td>
+          <td>${r.group}</td>
+          <td>${toKoTeamName(r.id, r.team)}</td>
+          <td>${r.pts}</td>
+          <td>${r.gd > 0 ? `+${r.gd}` : r.gd}</td>
+          <td>${r.gf}</td>
+          <td>${r.played ?? "-"}</td>
+        `;
+        body.appendChild(tr);
+      });
+    }
+
+    function init() {
+      const data = window.WC_DATA;
+      if (!data) {
+        document.getElementById("errorBox").innerHTML = '<div class="error">data/matches.js에서 전역 변수 window.WC_DATA를 찾을 수 없습니다.</div>';
+        return;
+      }
+      document.querySelectorAll(".filter-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          currentFilter = btn.dataset.filter;
+          document.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          renderMatches(data);
+        });
+      });
+      renderSummary(data);
+      renderMatches(data);
+      renderThirdTable(data);
+    }
+
+    init();
+  </script>
+</body>
+</html>
