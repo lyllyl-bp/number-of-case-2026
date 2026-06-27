@@ -1,5 +1,5 @@
 window.WC_DATA = {
-  "updatedAt": "2026-06-28T07:28:36+09:00",
+  "updatedAt": "2026-06-28T08:05:19+09:00",
   "bestThirdSlots": 8,
   "summary": {
     "requiredMatchHits": 3,
@@ -211,11 +211,11 @@ window.WC_DATA = {
         "name": "가나",
         "flag": "🇬🇭"
       },
-      "status": "live",
-      "impact": "watch",
+      "status": "ended",
+      "impact": "bad",
       "score": {
-        "home": 1,
-        "away": 0
+        "home": 2,
+        "away": 1
       }
     }
   ],
@@ -325,7 +325,7 @@ window.WC_DATA = {
       "team": "가나",
       "pts": 4,
       "gd": 0,
-      "gf": 1,
+      "gf": 2,
       "played": 3
     }
   ]
