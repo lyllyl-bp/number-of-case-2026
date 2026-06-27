@@ -1,5 +1,5 @@
 window.WC_DATA = {
-  "updatedAt": "2026-06-27T18:51:28+09:00",
+  "updatedAt": "2026-06-27T21:56:29+09:00",
   "bestThirdSlots": 8,
   "summary": {
     "requiredMatchHits": 3,
@@ -281,8 +281,8 @@ window.WC_DATA = {
     },
     {
       "group": "H",
-      "id": "URU",
-      "team": "우루과이",
+      "id": "URY",
+      "team": "Uruguay",
       "pts": 2,
       "gd": -1,
       "gf": 3,
