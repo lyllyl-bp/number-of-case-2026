@@ -1,5 +1,5 @@
 window.WC_DATA = {
-  "updatedAt": "2026-06-27T14:10:08+09:00",
+  "updatedAt": "2026-06-27T14:37:50+09:00",
   "bestThirdSlots": 8,
   "summary": {
     "requiredMatchHits": 3,
@@ -143,7 +143,7 @@ window.WC_DATA = {
       "impact": "bad",
       "score": {
         "home": 1,
-        "away": 2
+        "away": 1
       }
     },
     {
@@ -272,11 +272,11 @@ window.WC_DATA = {
     },
     {
       "group": "G",
-      "id": "EGY",
-      "team": "이집트",
-      "pts": 4,
-      "gd": 1,
-      "gf": 5,
+      "id": "IRN",
+      "team": "이란",
+      "pts": 3,
+      "gd": 0,
+      "gf": 3,
       "played": 3
     },
     {
