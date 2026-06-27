@@ -1,5 +1,5 @@
 window.WC_DATA = {
-  "updatedAt": "2026-06-27T13:17:55+09:00",
+  "updatedAt": "2026-06-27T14:04:40+09:00",
   "bestThirdSlots": 8,
   "summary": {
     "requiredMatchHits": 3,
@@ -99,12 +99,8 @@ window.WC_DATA = {
         "name": "이라크",
         "flag": "🇮🇶"
       },
-      "status": "ended",
-      "impact": "bad",
-      "score": {
-        "home": 5,
-        "away": 0
-      }
+      "status": "upcoming",
+      "impact": "bad"
     },
     {
       "group": "H",
@@ -143,7 +139,7 @@ window.WC_DATA = {
       "impact": "good",
       "score": {
         "home": 1,
-        "away": 1
+        "away": 2
       }
     },
     {
@@ -159,11 +155,11 @@ window.WC_DATA = {
         "name": "뉴질랜드",
         "flag": "🇳🇿"
       },
-      "status": "live",
-      "impact": "watch",
+      "status": "ended",
+      "impact": "good",
       "score": {
-        "home": 2,
-        "away": 0
+        "home": 5,
+        "away": 1
       }
     },
     {
@@ -272,11 +268,11 @@ window.WC_DATA = {
     },
     {
       "group": "G",
-      "id": "IRN",
-      "team": "이란",
-      "pts": 3,
-      "gd": 0,
-      "gf": 3,
+      "id": "EGY",
+      "team": "이집트",
+      "pts": 4,
+      "gd": 1,
+      "gf": 5,
       "played": 3
     },
     {
@@ -292,10 +288,10 @@ window.WC_DATA = {
       "group": "I",
       "id": "SEN",
       "team": "세네갈",
-      "pts": 3,
-      "gd": 2,
-      "gf": 8,
-      "played": 3
+      "pts": 0,
+      "gd": -3,
+      "gf": 3,
+      "played": 2
     },
     {
       "group": "J",
