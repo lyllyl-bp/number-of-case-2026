@@ -1,5 +1,5 @@
 window.WC_DATA = {
-  "updatedAt": "2026-06-27T06:41:23+09:00",
+  "updatedAt": "2026-06-27T11:34:30+09:00",
   "bestThirdSlots": 8,
   "summary": {
     "requiredMatchHits": 3,
@@ -119,8 +119,12 @@ window.WC_DATA = {
         "name": "우루과이",
         "flag": "🇺🇾"
       },
-      "status": "upcoming",
-      "impact": "good"
+      "status": "ended",
+      "impact": "good",
+      "score": {
+        "home": 1,
+        "away": 0
+      }
     },
     {
       "group": "G",
@@ -167,8 +171,12 @@ window.WC_DATA = {
         "name": "사우디아라비아",
         "flag": "🇸🇦"
       },
-      "status": "upcoming",
-      "impact": "watch"
+      "status": "ended",
+      "impact": "bad",
+      "score": {
+        "home": 0,
+        "away": 0
+      }
     },
     {
       "group": "J",
@@ -285,12 +293,12 @@ window.WC_DATA = {
     },
     {
       "group": "H",
-      "id": "CPV",
-      "team": "Cape Verde",
+      "id": "URU",
+      "team": "우루과이",
       "pts": 2,
-      "gd": 0,
-      "gf": 2,
-      "played": 2
+      "gd": -1,
+      "gf": 3,
+      "played": 3
     },
     {
       "group": "I",
