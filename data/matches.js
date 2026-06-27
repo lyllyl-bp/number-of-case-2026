@@ -1,5 +1,5 @@
 window.WC_DATA = {
-  "updatedAt": "2026-06-27T11:34:30+09:00",
+  "updatedAt": "2026-06-27T11:53:40+09:00",
   "bestThirdSlots": 8,
   "summary": {
     "requiredMatchHits": 3,
@@ -157,26 +157,6 @@ window.WC_DATA = {
       },
       "status": "upcoming",
       "impact": "watch"
-    },
-    {
-      "group": "H",
-      "kickoff": "2026-06-27T09:00:00+09:00",
-      "home": {
-        "code": "CPV",
-        "name": "카보베르데",
-        "flag": "🇨🇻"
-      },
-      "away": {
-        "code": "KSA",
-        "name": "사우디아라비아",
-        "flag": "🇸🇦"
-      },
-      "status": "ended",
-      "impact": "bad",
-      "score": {
-        "home": 0,
-        "away": 0
-      }
     },
     {
       "group": "J",

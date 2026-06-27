@@ -150,9 +150,9 @@ def evaluate_match_impact(home_code: str, away_code: str, home_score: int, away_
     # G 보조조건: 벨기에-뉴질랜드 승패가 갈려야 함
     if (home_code, away_code) == ("BEL", "NZL"):
         return "good" if diff != 0 else "bad"
-    # H 보조조건: 카보베르데-사우디아라비아 승패가 갈려야 함
+    # H: 카보베르데-사우디아라비아는 한국 진출 조건과 무관 (중립)
     if (home_code, away_code) == ("CPV", "KSA"):
-        return "good" if diff != 0 else "bad"
+        return "watch"
     return None
 
 
@@ -170,7 +170,7 @@ def update_match_impact(data: dict) -> None:
         if not home_code or not away_code:
             continue
         impact = evaluate_match_impact(home_code, away_code, h, a)
-        if impact in ("good", "bad"):
+        if impact in ("good", "bad", "watch"):
             item["impact"] = impact
 
 

@@ -511,14 +511,12 @@
       },
       {
         group: "H",
-        wanted: "스페인 승리 + 카보베르데 vs 사우디 승패 결정(무승부 제외)",
-        matches: [["ESP", "URU"], ["CPV", "KSA"]],
+        wanted: "스페인 승리",
+        matches: [["ESP", "URU"]],
         evaluate: (ctx) => {
           const m1 = ctx.mustGet("ESP", "URU");
-          const m2 = ctx.mustGet("CPV", "KSA");
           const spainWin = ctx.goalsFor(m1, "ESP") > ctx.goalsFor(m1, "URU");
-          const cpvKsaNotDraw = ctx.goalsFor(m2, "CPV") !== ctx.goalsFor(m2, "KSA");
-          return spainWin && cpvKsaNotDraw;
+          return spainWin;
         }
       }
     ];
