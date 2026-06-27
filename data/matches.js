@@ -1,5 +1,5 @@
 window.WC_DATA = {
-  "updatedAt": "2026-06-27T14:06:22+09:00",
+  "updatedAt": "2026-06-27T14:10:08+09:00",
   "bestThirdSlots": 8,
   "summary": {
     "requiredMatchHits": 3,
@@ -139,8 +139,8 @@ window.WC_DATA = {
         "name": "이란",
         "flag": "🇮🇷"
       },
-      "status": "live",
-      "impact": "good",
+      "status": "ended",
+      "impact": "bad",
       "score": {
         "home": 1,
         "away": 2
