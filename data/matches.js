@@ -1,5 +1,5 @@
 window.WC_DATA = {
-  "updatedAt": "2026-06-28T06:55:06+09:00",
+  "updatedAt": "2026-06-28T07:28:36+09:00",
   "bestThirdSlots": 8,
   "summary": {
     "requiredMatchHits": 3,
@@ -99,8 +99,12 @@ window.WC_DATA = {
         "name": "이라크",
         "flag": "🇮🇶"
       },
-      "status": "upcoming",
-      "impact": "bad"
+      "status": "ended",
+      "impact": "bad",
+      "score": {
+        "home": 5,
+        "away": 0
+      }
     },
     {
       "group": "H",
@@ -139,7 +143,7 @@ window.WC_DATA = {
       "impact": "bad",
       "score": {
         "home": 1,
-        "away": 2
+        "away": 1
       }
     },
     {
@@ -272,11 +276,11 @@ window.WC_DATA = {
     },
     {
       "group": "G",
-      "id": "EGY",
-      "team": "이집트",
-      "pts": 4,
-      "gd": 1,
-      "gf": 5,
+      "id": "IRN",
+      "team": "이란",
+      "pts": 3,
+      "gd": 0,
+      "gf": 3,
       "played": 3
     },
     {
@@ -292,10 +296,10 @@ window.WC_DATA = {
       "group": "I",
       "id": "SEN",
       "team": "세네갈",
-      "pts": 0,
-      "gd": -3,
-      "gf": 3,
-      "played": 2
+      "pts": 3,
+      "gd": 2,
+      "gf": 8,
+      "played": 3
     },
     {
       "group": "J",
