@@ -1,5 +1,5 @@
 window.WC_DATA = {
-  "updatedAt": "2026-06-28T11:45:55+09:00",
+  "updatedAt": "2026-06-28T11:50:36+09:00",
   "bestThirdSlots": 8,
   "summary": {
     "requiredMatchHits": 3,
@@ -215,8 +215,12 @@ window.WC_DATA = {
         "name": "가나",
         "flag": "🇬🇭"
       },
-      "status": "upcoming",
-      "impact": "bad"
+      "status": "ended",
+      "impact": "bad",
+      "score": {
+        "home": 2,
+        "away": 1
+      }
     }
   ],
   "thirdTable": [
@@ -321,12 +325,12 @@ window.WC_DATA = {
     },
     {
       "group": "L",
-      "id": "CRO",
-      "team": "크로아티아",
-      "pts": 3,
-      "gd": -1,
-      "gf": 3,
-      "played": 2
+      "id": "GHA",
+      "team": "가나",
+      "pts": 4,
+      "gd": 0,
+      "gf": 2,
+      "played": 3
     }
   ]
 };
