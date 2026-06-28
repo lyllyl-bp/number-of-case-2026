@@ -1,5 +1,5 @@
 window.WC_DATA = {
-  "updatedAt": "2026-06-28T12:39:55+09:00",
+  "updatedAt": "2026-06-28T13:10:11+09:00",
   "bestThirdSlots": 8,
   "summary": {
     "requiredMatchHits": 3,
@@ -179,11 +179,11 @@ window.WC_DATA = {
         "name": "오스트리아",
         "flag": "🇦🇹"
       },
-      "status": "live",
-      "impact": "watch",
+      "status": "ended",
+      "impact": "bad",
       "score": {
-        "home": 2,
-        "away": 2
+        "home": 3,
+        "away": 3
       }
     },
     {
@@ -315,7 +315,7 @@ window.WC_DATA = {
       "team": "알제리",
       "pts": 4,
       "gd": -2,
-      "gf": 4,
+      "gf": 5,
       "played": 3
     },
     {
