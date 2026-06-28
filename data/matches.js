@@ -1,5 +1,5 @@
 window.WC_DATA = {
-  "updatedAt": "2026-06-28T08:05:19+09:00",
+  "updatedAt": "2026-06-28T10:55:00+09:00",
   "bestThirdSlots": 8,
   "summary": {
     "requiredMatchHits": 3,
@@ -195,8 +195,12 @@ window.WC_DATA = {
         "name": "우즈베키스탄",
         "flag": "🇺🇿"
       },
-      "status": "upcoming",
-      "impact": "watch"
+      "status": "ended",
+      "impact": "bad",
+      "score": {
+        "home": 3,
+        "away": 1
+      }
     },
     {
       "group": "L",
@@ -314,10 +318,10 @@ window.WC_DATA = {
       "group": "K",
       "id": "COD",
       "team": "콩고민주공화국",
-      "pts": 1,
-      "gd": -1,
-      "gf": 1,
-      "played": 2
+      "pts": 4,
+      "gd": 1,
+      "gf": 4,
+      "played": 3
     },
     {
       "group": "L",
